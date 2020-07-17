@@ -23,5 +23,11 @@ namespace School_Management_App.Data
     /// course model entity
     /// </summary>
     public DbSet<Course> Courses { get; set; }
+
+
+    /// <summary>
+    /// student model entity
+    /// </summary>
+    public DbSet<Student> Students { get; set; }
   }
 }

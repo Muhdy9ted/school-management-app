@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using School_Management_App.Data;
 
 namespace School_Management_App.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200717162541_created_studentModel")]
+    partial class created_studentModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,15 +29,9 @@ namespace School_Management_App.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("StudentId");
-
                     b.Property<int>("creditUnit");
 
-                    b.Property<string>("faculty");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("StudentId");
 
                     b.ToTable("Courses");
                 });
@@ -46,15 +42,11 @@ namespace School_Management_App.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("createdAt");
-
                     b.Property<string>("department");
 
                     b.Property<string>("faculty");
 
                     b.Property<string>("firstname");
-
-                    b.Property<string>("gender");
 
                     b.Property<string>("lastname");
 
@@ -69,13 +61,6 @@ namespace School_Management_App.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Students");
-                });
-
-            modelBuilder.Entity("School_Management_App.Models.Course", b =>
-                {
-                    b.HasOne("School_Management_App.Models.Student")
-                        .WithMany("courses")
-                        .HasForeignKey("StudentId");
                 });
 #pragma warning restore 612, 618
         }
