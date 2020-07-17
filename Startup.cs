@@ -13,23 +13,45 @@ using Swashbuckle.AspNetCore.Swagger;
 using System.Reflection;
 using System.IO;
 using Microsoft.OpenApi.Models;
+using School_Management_App.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace School_Management_App
 {
+  /// <summary>
+  /// the startup class 
+  /// </summary>
   public class Startup
   {
+
+    /// <summary>
+    /// the startup class constructor
+    /// </summary>
+    /// <param name="configuration"></param>
     public Startup(IConfiguration configuration)
     {
       Configuration = configuration;
     }
 
+
+    /// <summary>
+    /// the configuration property
+    /// </summary>
     public IConfiguration Configuration { get; }
 
-    // This method gets called by the runtime. Use this method to add services to the container.
+
+    /// <summary>
+    /// the configuration method for adding services to the project
+    /// </summary>
+    /// <param name="services"></param>
     public void ConfigureServices(IServiceCollection services)
     {
+
+      // add the Dbcontext service
+      services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+      
       // add swagger generator
       services.AddSwaggerGen(options =>
       {
@@ -38,7 +60,7 @@ namespace School_Management_App
         {
           Version = "v1",
           Title = "School Management App API",
-          Description = "A list of all the API-endpoints that makes up the project",
+          Description = "A list of all the API-endpoints that makes up the School management app project",
           Contact = new OpenApiContact
           {
             Name = "Abdullahi Muhammed",
@@ -50,7 +72,13 @@ namespace School_Management_App
       });
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+
+
+    /// <summary>
+    /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    /// </summary>
+    /// <param name="app"></param>
+    /// <param name="env"></param>
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
       if (env.IsDevelopment())
@@ -58,8 +86,10 @@ namespace School_Management_App
         app.UseDeveloperExceptionPage();
       }
 
+      // adding swagger API to the request pipeline
       app.UseSwagger();
 
+      // adding swagger API to the request pipeline
       app.UseSwaggerUI(options =>
           options.SwaggerEndpoint("/swagger/v1/swagger.json", "School Management App API v1")
       );

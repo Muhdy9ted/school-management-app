@@ -11,5 +11,69 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:School_Management_App.Data.ApplicationDbContext">
+            <summary>
+            the context session that interfaces with our database to provide us several operations and functionalities
+            </summary>
+        </member>
+        <member name="M:School_Management_App.Data.ApplicationDbContext.#ctor(Microsoft.EntityFrameworkCore.DbContextOptions{School_Management_App.Data.ApplicationDbContext})">
+            <summary>
+            accessing the instance of the DbContext options
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Data.ApplicationDbContext.Courses">
+            <summary>
+            course model entity
+            </summary>
+        </member>
+        <member name="T:School_Management_App.Models.Course">
+            <summary>
+            The course model 
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Course.Id">
+            <summary>
+            the primary key of the course model
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Course.Name">
+            <summary>
+            the title of the course
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Course.creditUnit">
+            <summary>
+            the credit unit on the course 
+            </summary>
+        </member>
+        <member name="T:School_Management_App.Startup">
+            <summary>
+            the startup class 
+            </summary>
+        </member>
+        <member name="M:School_Management_App.Startup.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            the startup class constructor
+            </summary>
+            <param name="configuration"></param>
+        </member>
+        <member name="P:School_Management_App.Startup.Configuration">
+            <summary>
+            the configuration property
+            </summary>
+        </member>
+        <member name="M:School_Management_App.Startup.ConfigureServices(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            the configuration method for adding services to the project
+            </summary>
+            <param name="services"></param>
+        </member>
+        <member name="M:School_Management_App.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IHostingEnvironment)">
+            <summary>
+            This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+            </summary>
+            <param name="app"></param>
+            <param name="env"></param>
+        </member>
     </members>
 </doc>
