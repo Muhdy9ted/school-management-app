@@ -15,6 +15,7 @@ using System.IO;
 using Microsoft.OpenApi.Models;
 using School_Management_App.Data;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace School_Management_App
 {
@@ -73,6 +74,19 @@ namespace School_Management_App
 
       // add Cors
       services.AddCors();
+
+      // add our repositories to the services for injection into our controllers
+      services.AddScoped<IAuthRepository, AuthRepository>();
+
+      // Auto-mapper configuration
+      var mappingConfig = new MapperConfiguration(mc =>
+      {
+        mc.AddProfile(new MappingProfile());
+      });
+
+      IMapper mapper = mappingConfig.CreateMapper();
+
+      services.AddSingleton(mapper);
     }
 
 

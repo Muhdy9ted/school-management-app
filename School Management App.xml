@@ -4,6 +4,49 @@
         <name>School Management App</name>
     </assembly>
     <members>
+        <member name="T:School_Management_App.Controllers.AuthController">
+            <summary>
+            authentication controller for the student access authentication
+            </summary>
+        </member>
+        <member name="M:School_Management_App.Controllers.AuthController.#ctor(School_Management_App.Data.IAuthRepository,AutoMapper.IMapper)">
+            <summary>
+            authcontroller constructor
+            </summary>
+            <param name="repo"></param>
+            <param name="mapper"></param>
+        </member>
+        <member name="M:School_Management_App.Controllers.AuthController.Register(School_Management_App.DTOs.StudentForRegisterDto)">
+            <summary>
+            API endpoint for student registration
+            </summary>
+            <param name="studentForRegisterDto"></param>
+            <returns></returns>
+        </member>
+        <member name="T:School_Management_App.Controllers.CoursesController">
+            <summary>
+            the courses controller providing us with various http operations
+            </summary>
+        </member>
+        <member name="M:School_Management_App.Controllers.CoursesController.#ctor(School_Management_App.Data.ApplicationDbContext)">
+            <summary>
+            the courses controller constructor
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:School_Management_App.Controllers.CoursesController.GetCourses">
+            <summary>
+            endpoint for retrieving all the available courses
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Controllers.CoursesController.GetCourse(System.Int32)">
+            <summary>
+            endpoint for retrieving 
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:School_Management_App.Controllers.ValuesController.Get">
             <summary>
              this is list all the values here
@@ -26,6 +69,186 @@
             course model entity
             </summary>
         </member>
+        <member name="P:School_Management_App.Data.ApplicationDbContext.Students">
+            <summary>
+            student model entity
+            </summary>
+        </member>
+        <member name="T:School_Management_App.Data.AuthRepository">
+            <summary>
+            implementing the Repository pattern for AuthController. 
+            </summary>
+        </member>
+        <member name="M:School_Management_App.Data.AuthRepository.#ctor(School_Management_App.Data.ApplicationDbContext)">
+            <summary>
+            AuthRepo constructor
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:School_Management_App.Data.AuthRepository.Login(System.String,System.String)">
+            <summary>
+            endpoint for student login
+            </summary>
+            <param name="matNo"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Data.AuthRepository.VerifyPasswordHash(System.String,System.Byte[],System.Byte[])">
+            <summary>
+            verify if student's password matches with whats in the db 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Data.AuthRepository.Register(School_Management_App.Models.Student,System.String)">
+            <summary>
+            endpoint for student registration
+            </summary>
+            <param name="student"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Data.AuthRepository.StudentExist(System.String)">
+            <summary>
+            endpoint to verify if a student with a particular matNo already exist 
+            </summary>
+            <param name="matNo"></param>
+            <returns></returns>
+        </member>
+        <member name="T:School_Management_App.Data.IAuthRepository">
+            <summary>
+            implementing the Repository pattern for AuthController. 
+            </summary>
+        </member>
+        <member name="M:School_Management_App.Data.IAuthRepository.Register(School_Management_App.Models.Student,System.String)">
+            <summary>
+            register method for the auth controller
+            </summary>
+            <param name="student"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Data.IAuthRepository.Login(System.String,System.String)">
+            <summary>
+            login method for the auth controller
+            </summary>
+            <param name="matNo"></param>
+            <param name="password"></param>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Data.IAuthRepository.StudentExist(System.String)">
+            <summary>
+            verify student exist method for the auth controller
+            </summary>
+            <param name="matNo"></param>
+            <returns></returns>
+        </member>
+        <member name="T:School_Management_App.DTOs.StudentForDetailedDto">
+            <summary>
+            Dto for student dashboard
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForDetailedDto.Id">
+            <summary>
+            the primary key of the table
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForDetailedDto.firstname">
+            <summary>
+            student's firstname
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForDetailedDto.lastname">
+            <summary>
+            student's lastname
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForDetailedDto.matNo">
+            <summary>
+            the student's matriculation number
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForDetailedDto.level">
+            <summary>
+            the student's current level/year 
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForDetailedDto.department">
+            <summary>
+            the student's department
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForDetailedDto.faculty">
+            <summary>
+            the student's faculty
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForDetailedDto.gender">
+            <summary>
+            The student's gender
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForDetailedDto.courses">
+            <summary>
+            a list of courses offered by the student
+            </summary>
+        </member>
+        <member name="T:School_Management_App.DTOs.StudentForRegisterDto">
+            <summary>
+            Dto for student registration
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForRegisterDto.matNo">
+            <summary>
+            maps to the matNo field of the student entity
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForRegisterDto.password">
+            <summary>
+            stores the student's password which is then used in generating the passwordhash field in the student entity
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForRegisterDto.firstname">
+            <summary>
+            maps to the firstname field of the student entity
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForRegisterDto.lastname">
+            <summary>
+            maps to the lastname field of the student entity
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForRegisterDto.level">
+            <summary>
+            maps to the level field of the student entity
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForRegisterDto.department">
+            <summary>
+            maps to the department field of the student entity
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForRegisterDto.faculty">
+            <summary>
+            maps to the faculty field of the student entity
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForRegisterDto.gender">
+            <summary>
+            maps to the gender field of the student entity
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForRegisterDto.createdAt">
+            <summary>
+            maps to the dateJoined field of the student entity
+            </summary>
+        </member>
+        <member name="M:School_Management_App.DTOs.StudentForRegisterDto.#ctor">
+            <summary>
+            class constructor
+            </summary>
+        </member>
         <member name="T:School_Management_App.Models.Course">
             <summary>
             The course model 
@@ -44,6 +267,76 @@
         <member name="P:School_Management_App.Models.Course.creditUnit">
             <summary>
             the credit unit on the course 
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Course.faculty">
+            <summary>
+            the faculty that owns the course
+            </summary>
+        </member>
+        <member name="T:School_Management_App.Models.Student">
+            <summary>
+            the student model
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Student.Id">
+            <summary>
+            the primary key of the table
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Student.firstname">
+            <summary>
+            student's firstname
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Student.lastname">
+            <summary>
+            student's lastname
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Student.matNo">
+            <summary>
+            the student's matriculation number
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Student.passwordHash">
+            <summary>
+            storing the student's password in hashed format
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Student.passwordSalt">
+            <summary>
+            the salt key for hashing the password
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Student.level">
+            <summary>
+            the student's current level/year 
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Student.department">
+            <summary>
+            the student's department
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Student.faculty">
+            <summary>
+            the student's faculty
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Student.gender">
+            <summary>
+            The student's gender
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Student.createdAt">
+            <summary>
+            The date the student created his/her account
+            </summary>
+        </member>
+        <member name="P:School_Management_App.Models.Student.courses">
+            <summary>
+            a list of courses offered by the student
             </summary>
         </member>
         <member name="T:School_Management_App.Startup">

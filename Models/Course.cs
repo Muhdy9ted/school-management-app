@@ -24,5 +24,11 @@ namespace School_Management_App.Models
     /// the credit unit on the course 
     /// </summary>
     public int creditUnit { get; set; }
+
+
+    /// <summary>
+    /// the faculty that owns the course
+    /// </summary>
+    public string faculty { get; set; }
   }
 }
