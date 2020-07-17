@@ -49,8 +49,8 @@ namespace School_Management_App
 
       // add the Dbcontext service
       services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
       
       // add swagger generator
       services.AddSwaggerGen(options =>
@@ -70,6 +70,9 @@ namespace School_Management_App
         var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + @"School Management App.xml";
         options.IncludeXmlComments(xmlPath);
       });
+
+      // add Cors
+      services.AddCors();
     }
 
 
@@ -93,6 +96,9 @@ namespace School_Management_App
       app.UseSwaggerUI(options =>
           options.SwaggerEndpoint("/swagger/v1/swagger.json", "School Management App API v1")
       );
+
+      // use Cors
+      app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
       app.UseMvc();
     }
