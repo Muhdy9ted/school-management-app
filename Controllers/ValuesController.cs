@@ -11,6 +11,11 @@ namespace School_Management_App.Controllers
   public class ValuesController : ControllerBase
   {
     // GET api/values
+    /// <summary>
+    ///  this is list all the values here
+    ///  <param name="id">Mandatory</param>
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public ActionResult<IEnumerable<string>> Get()
     {

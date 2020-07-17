@@ -45,7 +45,7 @@ namespace School_Management_App
             Email = "muhammedu9ted@yahoo.com",
           },
         });
-        var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + @"HosteliteAPI.xml";
+        var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + @"School Management App.xml";
         options.IncludeXmlComments(xmlPath);
       });
     }

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>School Management App</name>
+    </assembly>
+    <members>
+        <member name="M:School_Management_App.Controllers.ValuesController.Get">
+            <summary>
+             this is list all the values here
+             <param name="id">Mandatory</param>
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
