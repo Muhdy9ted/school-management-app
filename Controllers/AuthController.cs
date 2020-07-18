@@ -57,9 +57,7 @@ namespace School_Management_App.Controllers
       var studentToCreate = _mapper.Map<Student>(studentForRegisterDto);
       var createStudent = await _repo.Register(studentToCreate, studentForRegisterDto.password);
       var studentToReturn = _mapper.Map<StudentForDetailedDto>(createStudent);
-      return Ok(studentToReturn);
-
-      /*return CreatedAtRoute("GetStudent", new { controller = "Student", id = createStudent.Id }, studentToReturn);*/ // GetStudent is the name of the method to get a single student method in studentController
+      return CreatedAtRoute("GetStudent", new { controller = "Students", id = createStudent.Id }, studentToReturn);
     }
 
 
