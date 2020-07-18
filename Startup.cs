@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
@@ -7,15 +6,18 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.Swagger;
-using System.Reflection;
 using System.IO;
 using Microsoft.OpenApi.Models;
 using School_Management_App.Data;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using School_Management_App.Helpers;
+using Microsoft.IdentityModel.Tokens;
 
 namespace School_Management_App
 {
@@ -51,7 +53,9 @@ namespace School_Management_App
       // add the Dbcontext service
       services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddJsonOptions(options => {
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+      }); ;
       
       // add swagger generator
       services.AddSwaggerGen(options =>
@@ -75,8 +79,9 @@ namespace School_Management_App
       // add Cors
       services.AddCors();
 
-      // add our repositories to the services for injection into our controllers
+      // add our repository patterns to the services for injection into our controllers
       services.AddScoped<IAuthRepository, AuthRepository>();
+      services.AddScoped<IStudentRepository, StudentRepository>();
 
       // Auto-mapper configuration
       var mappingConfig = new MapperConfiguration(mc =>
@@ -87,6 +92,20 @@ namespace School_Management_App
       IMapper mapper = mappingConfig.CreateMapper();
 
       services.AddSingleton(mapper);
+
+      // Authentication by JWT Token
+      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+              .AddJwtBearer(options =>
+              {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                  ValidateIssuerSigningKey = true,
+                  IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+                  ValidateIssuer = false,
+                  ValidateAudience = false
+                };
+              });
+
     }
 
 
@@ -98,9 +117,41 @@ namespace School_Management_App
     /// <param name="env"></param>
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
+      // configure global exception
       if (env.IsDevelopment())
       {
-        app.UseDeveloperExceptionPage();
+        //app.UseDeveloperExceptionPage();
+        app.UseExceptionHandler(builder =>
+        {
+          builder.Run(async context =>
+          {
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+            var error = context.Features.Get<IExceptionHandlerFeature>();
+            if (error != null)
+            {
+              context.Response.AddApplicationError(error.Error.Message);
+              await context.Response.WriteAsync(error.Error.Message);
+            }
+          });
+        });
+      }
+      else
+      {
+        app.UseExceptionHandler(builder =>
+        {
+          builder.Run(async context =>
+          {
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+            var error = context.Features.Get<IExceptionHandlerFeature>();
+            if (error != null)
+            {
+              context.Response.AddApplicationError(error.Error.Message);
+              await context.Response.WriteAsync(error.Error.Message);
+            }
+          });
+        });
       }
 
       // adding swagger API to the request pipeline
@@ -113,8 +164,13 @@ namespace School_Management_App
 
       // use Cors
       app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
-
+      app.UseAuthentication();
       app.UseMvc();
+      app.Run(context =>
+      {
+        context.Response.Redirect("/swagger/index.html");
+        return Task.CompletedTask;
+      });
     }
   }
 }

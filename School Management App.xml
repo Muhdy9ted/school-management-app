@@ -9,18 +9,26 @@
             authentication controller for the student access authentication
             </summary>
         </member>
-        <member name="M:School_Management_App.Controllers.AuthController.#ctor(School_Management_App.Data.IAuthRepository,AutoMapper.IMapper)">
+        <member name="M:School_Management_App.Controllers.AuthController.#ctor(School_Management_App.Data.IAuthRepository,AutoMapper.IMapper,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             authcontroller constructor
             </summary>
             <param name="repo"></param>
             <param name="mapper"></param>
+            <param name="config"></param>
         </member>
         <member name="M:School_Management_App.Controllers.AuthController.Register(School_Management_App.DTOs.StudentForRegisterDto)">
             <summary>
             API endpoint for student registration
             </summary>
             <param name="studentForRegisterDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Controllers.AuthController.Login(School_Management_App.DTOs.StudentForLoginDto)">
+            <summary>
+            API endpoint for student login
+            </summary>
+            <param name="studentForLoginDto"></param>
             <returns></returns>
         </member>
         <member name="T:School_Management_App.Controllers.CoursesController">
@@ -43,6 +51,29 @@
         <member name="M:School_Management_App.Controllers.CoursesController.GetCourse(System.Int32)">
             <summary>
             endpoint for retrieving 
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:School_Management_App.Controllers.StudentsController">
+            <summary>
+            student controller for student operations
+            </summary>
+        </member>
+        <member name="M:School_Management_App.Controllers.StudentsController.#ctor(School_Management_App.Data.IStudentRepository,AutoMapper.IMapper)">
+            <summary>
+            student controller constructor
+            </summary>
+        </member>
+        <member name="M:School_Management_App.Controllers.StudentsController.GetStudents">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Controllers.StudentsController.GetStudent(System.Int32)">
+            <summary>
+            
             </summary>
             <param name="id"></param>
             <returns></returns>
@@ -142,6 +173,88 @@
             <param name="matNo"></param>
             <returns></returns>
         </member>
+        <member name="T:School_Management_App.Data.IStudentRepository">
+            <summary>
+            the student repo interface
+            </summary>
+        </member>
+        <member name="M:School_Management_App.Data.IStudentRepository.Add``1(``0)">
+            <summary>
+            for adding a student
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+        </member>
+        <member name="M:School_Management_App.Data.IStudentRepository.Delete``1(``0)">
+            <summary>
+            for deleting
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+        </member>
+        <member name="M:School_Management_App.Data.IStudentRepository.SaveAll">
+            <summary>
+            for saving changes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Data.IStudentRepository.GetStudents">
+            <summary>
+            for returning a list of students
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Data.IStudentRepository.GetStudent(System.Int32)">
+            <summary>
+            for getting a particular student
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:School_Management_App.Data.StudentRepository">
+            <summary>
+            the student controller repo
+            </summary>
+        </member>
+        <member name="M:School_Management_App.Data.StudentRepository.#ctor(School_Management_App.Data.ApplicationDbContext)">
+            <summary>
+            the student controller repo constructor
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:School_Management_App.Data.StudentRepository.Add``1(``0)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+        </member>
+        <member name="M:School_Management_App.Data.StudentRepository.Delete``1(``0)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+        </member>
+        <member name="M:School_Management_App.Data.StudentRepository.GetStudent(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Data.StudentRepository.GetStudents">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Data.StudentRepository.SaveAll">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:School_Management_App.DTOs.StudentForDetailedDto">
             <summary>
             Dto for student dashboard
@@ -190,6 +303,61 @@
         <member name="P:School_Management_App.DTOs.StudentForDetailedDto.courses">
             <summary>
             a list of courses offered by the student
+            </summary>
+        </member>
+        <member name="T:School_Management_App.DTOs.StudentForListDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForListDto.Id">
+            <summary>
+            the primary key of the table
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForListDto.firstname">
+            <summary>
+            student's firstname
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForListDto.lastname">
+            <summary>
+            student's lastname
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForListDto.level">
+            <summary>
+            the student's current level/year 
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForListDto.department">
+            <summary>
+            the student's department
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForListDto.faculty">
+            <summary>
+            the student's faculty
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForListDto.gender">
+            <summary>
+            The student's gender
+            </summary>
+        </member>
+        <member name="T:School_Management_App.DTOs.StudentForLoginDto">
+            <summary>
+            dto for student login
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForLoginDto.matNo">
+            <summary>
+            maps to the matNo field in the student entity
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForLoginDto.password">
+            <summary>
+            stores the student's password which is then used in generating the passwordhash field which is then validated against the stored passwordHarsh
             </summary>
         </member>
         <member name="T:School_Management_App.DTOs.StudentForRegisterDto">
@@ -248,6 +416,18 @@
             <summary>
             class constructor
             </summary>
+        </member>
+        <member name="T:School_Management_App.Helpers.Extensions">
+            <summary>
+            an extension class
+            </summary>
+        </member>
+        <member name="M:School_Management_App.Helpers.Extensions.AddApplicationError(Microsoft.AspNetCore.Http.HttpResponse,System.String)">
+            <summary>
+            extending exception handler to get server error messages 
+            </summary>
+            <param name="response"></param>
+            <param name="message"></param>
         </member>
         <member name="T:School_Management_App.Models.Course">
             <summary>
