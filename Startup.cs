@@ -82,6 +82,7 @@ namespace School_Management_App
       // add our repository patterns to the services for injection into our controllers
       services.AddScoped<IAuthRepository, AuthRepository>();
       services.AddScoped<IStudentRepository, StudentRepository>();
+      services.AddScoped<ICoursesRepository, CoursesRepository>();
 
       // Auto-mapper configuration
       var mappingConfig = new MapperConfiguration(mc =>

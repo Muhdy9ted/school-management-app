@@ -2,43 +2,50 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using School_Management_App.Data;
+using School_Management_App.DTOs;
 using School_Management_App.Models;
 
 namespace School_Management_App.Controllers
 {
-  /// <summary>
-  /// the courses controller providing us with various http operations
-  /// </summary>
+    /// <summary>
+    /// the courses controller providing us with various http operations
+    /// </summary>
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CoursesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ICoursesRepository _repo;
+        private readonly IMapper _mapper;
 
 
-        /// <summary>
-        /// the courses controller constructor
-        /// </summary>
-        /// <param name="context"></param>
-        public CoursesController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+      /// <summary>
+      /// the courses controller constructor
+      /// </summary>
+      /// <param name="repo"></param>
+      /// <param name="mapper"></param>
+      public CoursesController(ICoursesRepository repo, IMapper mapper)
+      {
+        _repo = repo;
+        _mapper = mapper;
+      }
 
 
         // GET: api/Courses
         /// <summary>
-        /// endpoint for retrieving all the available courses
+        /// API endpoint for retrieving all the available courses
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetCourses()
         {
-            var courses = await _context.Courses.ToListAsync();
+            var courses = await _repo.GetCourses();
             return Ok(courses);
         }
 
@@ -46,82 +53,42 @@ namespace School_Management_App.Controllers
 
         // GET: api/Courses/5
         /// <summary>
-        /// endpoint for retrieving 
+        /// API endpoint for retrieving a particular course 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<Course>> GetCourse(int id)
+        public async Task<IActionResult> GetCourse(int id)
         {
-            var course = await _context.Courses.FindAsync(id);
-
-            if (course == null)
-            {
-                return NotFound();
-            }
-
-            return course;
+            var course = await _repo.GetCourse(id);
+            return Ok(course);
         }
 
-        // PUT: api/Courses/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCourse(int id, Course course)
-        {
-            if (id != course.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(course).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CourseExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
+  
 
         // POST: api/Courses
+        /// <summary>
+        /// API endpoint for creating a course
+        /// </summary>
+        /// <param name="courseForCreateDto"></param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<Course>> PostCourse(Course course)
+        public async Task<IActionResult> CreateCourse(CourseForCreateDto courseForCreateDto)
         {
-            _context.Courses.Add(course);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCourse", new { id = course.Id }, course);
+          courseForCreateDto.Name = courseForCreateDto.Name.ToLower();
+          if (await _repo.CourseExist(courseForCreateDto.Name))
+          {
+            return BadRequest("This Course alreaady exist, you can edit it to reflect new updates");
+          }
+          var courseToCreate = _mapper.Map<Course>(courseForCreateDto);
+          _repo.Add(courseToCreate);
+          if(await _repo.SaveAll())
+          {
+            return CreatedAtAction("GetCourse", new { id = courseToCreate.Id }, courseToCreate);
+          }
+          throw new Exception($"creating course {courseToCreate.Name} failed on save");
         }
 
-        // DELETE: api/Courses/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Course>> DeleteCourse(int id)
-        {
-            var course = await _context.Courses.FindAsync(id);
-            if (course == null)
-            {
-                return NotFound();
-            }
 
-            _context.Courses.Remove(course);
-            await _context.SaveChangesAsync();
-
-            return course;
-        }
-
-        private bool CourseExists(int id)
-        {
-            return _context.Courses.Any(e => e.Id == id);
-        }
     }
 }
