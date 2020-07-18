@@ -16,6 +16,9 @@ using Microsoft.OpenApi.Models;
 using School_Management_App.Data;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace School_Management_App
 {
@@ -87,6 +90,18 @@ namespace School_Management_App
       IMapper mapper = mappingConfig.CreateMapper();
 
       services.AddSingleton(mapper);
+
+      // Authentication by JWT Token
+      services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+      {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+          ValidateIssuerSigningKey = true,
+          IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Configuration.GetSection("AppSettings:Token").Value)),
+          ValidateIssuer = false,
+          ValidateAudience = false
+        };
+      });
     }
 
 
@@ -113,7 +128,7 @@ namespace School_Management_App
 
       // use Cors
       app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
-
+      app.UseAuthentication();
       app.UseMvc();
     }
   }

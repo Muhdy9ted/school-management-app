@@ -9,18 +9,26 @@
             authentication controller for the student access authentication
             </summary>
         </member>
-        <member name="M:School_Management_App.Controllers.AuthController.#ctor(School_Management_App.Data.IAuthRepository,AutoMapper.IMapper)">
+        <member name="M:School_Management_App.Controllers.AuthController.#ctor(School_Management_App.Data.IAuthRepository,AutoMapper.IMapper,Microsoft.Extensions.Configuration.IConfiguration)">
             <summary>
             authcontroller constructor
             </summary>
             <param name="repo"></param>
             <param name="mapper"></param>
+            <param name="config"></param>
         </member>
         <member name="M:School_Management_App.Controllers.AuthController.Register(School_Management_App.DTOs.StudentForRegisterDto)">
             <summary>
             API endpoint for student registration
             </summary>
             <param name="studentForRegisterDto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Controllers.AuthController.Login(School_Management_App.DTOs.StudentForLoginDto)">
+            <summary>
+            API endpoint for student login
+            </summary>
+            <param name="studentForLoginDto"></param>
             <returns></returns>
         </member>
         <member name="T:School_Management_App.Controllers.CoursesController">
@@ -190,6 +198,21 @@
         <member name="P:School_Management_App.DTOs.StudentForDetailedDto.courses">
             <summary>
             a list of courses offered by the student
+            </summary>
+        </member>
+        <member name="T:School_Management_App.DTOs.StudentForLoginDto">
+            <summary>
+            dto for student login
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForLoginDto.matNo">
+            <summary>
+            maps to the matNo field in the student entity
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForLoginDto.password">
+            <summary>
+            stores the student's password which is then used in generating the passwordhash field which is then validated against the stored passwordHarsh
             </summary>
         </member>
         <member name="T:School_Management_App.DTOs.StudentForRegisterDto">
