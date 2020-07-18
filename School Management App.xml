@@ -36,11 +36,12 @@
             the courses controller providing us with various http operations
             </summary>
         </member>
-        <member name="M:School_Management_App.Controllers.CoursesController.#ctor(School_Management_App.Data.ApplicationDbContext)">
+        <member name="M:School_Management_App.Controllers.CoursesController.#ctor(School_Management_App.Data.ICoursesRepository,AutoMapper.IMapper)">
             <summary>
             the courses controller constructor
             </summary>
-            <param name="context"></param>
+            <param name="repo"></param>
+            <param name="mapper"></param>
         </member>
         <member name="M:School_Management_App.Controllers.CoursesController.GetCourses">
             <summary>
@@ -53,6 +54,13 @@
             endpoint for retrieving 
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Controllers.CoursesController.CreateCourse(School_Management_App.DTOs.CourseForCreateDto)">
+            <summary>
+            
+            </summary>
+            <param name="courseForCreateDto"></param>
             <returns></returns>
         </member>
         <member name="T:School_Management_App.Controllers.StudentsController">
@@ -76,6 +84,14 @@
             
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Controllers.StudentsController.UpdateStudent(System.Int32,School_Management_App.DTOs.StudentForUpdateDto)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <param name="studentForUpdateDto"></param>
             <returns></returns>
         </member>
         <member name="M:School_Management_App.Controllers.ValuesController.Get">
@@ -145,6 +161,57 @@
             <param name="matNo"></param>
             <returns></returns>
         </member>
+        <member name="T:School_Management_App.Data.CoursesRepository">
+            <summary>
+            courses repository
+            </summary>
+        </member>
+        <member name="M:School_Management_App.Data.CoursesRepository.#ctor(School_Management_App.Data.ApplicationDbContext)">
+            <summary>
+            repo constructor
+            </summary>
+            <param name="context"></param>
+        </member>
+        <member name="M:School_Management_App.Data.CoursesRepository.Add``1(``0)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+        </member>
+        <member name="M:School_Management_App.Data.CoursesRepository.Delete``1(``0)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+        </member>
+        <member name="M:School_Management_App.Data.CoursesRepository.GetCourses">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Data.CoursesRepository.GetCourse(System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Data.CoursesRepository.SaveAll">
+            <summary>
+            
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Data.CoursesRepository.CourseExist(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
         <member name="T:School_Management_App.Data.IAuthRepository">
             <summary>
             implementing the Repository pattern for AuthController. 
@@ -171,6 +238,51 @@
             verify student exist method for the auth controller
             </summary>
             <param name="matNo"></param>
+            <returns></returns>
+        </member>
+        <member name="T:School_Management_App.Data.ICoursesRepository">
+            <summary>
+            course interface for repo pattern
+            </summary>
+        </member>
+        <member name="M:School_Management_App.Data.ICoursesRepository.Add``1(``0)">
+            <summary>
+            for adding a courses
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+        </member>
+        <member name="M:School_Management_App.Data.ICoursesRepository.Delete``1(``0)">
+            <summary>
+            for deleting
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="entity"></param>
+        </member>
+        <member name="M:School_Management_App.Data.ICoursesRepository.SaveAll">
+            <summary>
+            for saving changes
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Data.ICoursesRepository.GetCourses">
+            <summary>
+            for returning a list of students
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Data.ICoursesRepository.GetCourse(System.Int32)">
+            <summary>
+            for getting a particular student
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Data.ICoursesRepository.CourseExist(System.String)">
+            <summary>
+            verify if course exist method for the auth controller
+            </summary>
+            <param name="name"></param>
             <returns></returns>
         </member>
         <member name="T:School_Management_App.Data.IStudentRepository">
@@ -254,6 +366,26 @@
             
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:School_Management_App.DTOs.CourseForCreateDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.CourseForCreateDto.Name">
+            <summary>
+            the title of the course
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.CourseForCreateDto.creditUnit">
+            <summary>
+            the credit unit on the course 
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.CourseForCreateDto.faculty">
+            <summary>
+            the faculty that owns the course
+            </summary>
         </member>
         <member name="T:School_Management_App.DTOs.StudentForDetailedDto">
             <summary>
@@ -415,6 +547,26 @@
         <member name="M:School_Management_App.DTOs.StudentForRegisterDto.#ctor">
             <summary>
             class constructor
+            </summary>
+        </member>
+        <member name="T:School_Management_App.DTOs.StudentForUpdateDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForUpdateDto.level">
+            <summary>
+            the student's current level/year 
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForUpdateDto.department">
+            <summary>
+            the student's department
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.StudentForUpdateDto.faculty">
+            <summary>
+            the student's faculty
             </summary>
         </member>
         <member name="T:School_Management_App.Helpers.Extensions">

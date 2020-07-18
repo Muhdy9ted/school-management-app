@@ -11,6 +11,8 @@ namespace School_Management_App
       CreateMap<StudentForRegisterDto, Student>();
       CreateMap<Student, StudentForDetailedDto>();
       CreateMap<Student, StudentForListDto>();
+      CreateMap<StudentForUpdateDto, Student>();
+      CreateMap<CourseForCreateDto, Course>();
     }
   }
 }
