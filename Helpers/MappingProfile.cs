@@ -13,6 +13,10 @@ namespace School_Management_App
       CreateMap<Student, StudentForListDto>();
       CreateMap<StudentForUpdateDto, Student>();
       CreateMap<CourseForCreateDto, Course>();
+      CreateMap<CourseForRegistrationDto, Student>().ForMember(dest => dest.courses, opt =>
+       {
+         opt.MapFrom(src => src.Id);
+       });
     }
   }
 }

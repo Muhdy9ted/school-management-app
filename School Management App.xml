@@ -45,20 +45,20 @@
         </member>
         <member name="M:School_Management_App.Controllers.CoursesController.GetCourses">
             <summary>
-            endpoint for retrieving all the available courses
+            API endpoint for retrieving all the available courses
             </summary>
             <returns></returns>
         </member>
         <member name="M:School_Management_App.Controllers.CoursesController.GetCourse(System.Int32)">
             <summary>
-            endpoint for retrieving 
+            API endpoint for retrieving a particular course 
             </summary>
             <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:School_Management_App.Controllers.CoursesController.CreateCourse(School_Management_App.DTOs.CourseForCreateDto)">
             <summary>
-            
+            API endpoint for creating a course
             </summary>
             <param name="courseForCreateDto"></param>
             <returns></returns>
@@ -68,37 +68,38 @@
             student controller for student operations
             </summary>
         </member>
-        <member name="M:School_Management_App.Controllers.StudentsController.#ctor(School_Management_App.Data.IStudentRepository,AutoMapper.IMapper)">
+        <member name="M:School_Management_App.Controllers.StudentsController.#ctor(School_Management_App.Data.IStudentRepository,AutoMapper.IMapper,School_Management_App.Data.ApplicationDbContext)">
             <summary>
             student controller constructor
             </summary>
         </member>
         <member name="M:School_Management_App.Controllers.StudentsController.GetStudents">
             <summary>
-            
+            API endpoint for retrieving all registered students
             </summary>
             <returns></returns>
         </member>
         <member name="M:School_Management_App.Controllers.StudentsController.GetStudent(System.Int32)">
             <summary>
-            
+            API endpoint for retrieving a particular student
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:School_Management_App.Controllers.StudentsController.RegisterCourses(System.Int32,School_Management_App.DTOs.CourseForRegistrationDto)">
+            <summary>
+            API endpoint for student to regiser courses
+            </summary>
+            <param name="id"></param>
+            <param name="courseForRegistrationDto"></param>
             <returns></returns>
         </member>
         <member name="M:School_Management_App.Controllers.StudentsController.UpdateStudent(System.Int32,School_Management_App.DTOs.StudentForUpdateDto)">
             <summary>
-            
+            API endpoint for edit student profile
             </summary>
             <param name="id"></param>
             <param name="studentForUpdateDto"></param>
-            <returns></returns>
-        </member>
-        <member name="M:School_Management_App.Controllers.ValuesController.Get">
-            <summary>
-             this is list all the values here
-             <param name="id">Mandatory</param>
-            </summary>
             <returns></returns>
         </member>
         <member name="T:School_Management_App.Data.ApplicationDbContext">
@@ -385,6 +386,31 @@
         <member name="P:School_Management_App.DTOs.CourseForCreateDto.faculty">
             <summary>
             the faculty that owns the course
+            </summary>
+        </member>
+        <member name="T:School_Management_App.DTOs.CourseForRegistrationDto">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.CourseForRegistrationDto.Id">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.CourseForRegistrationDto.Name">
+            <summary>
+            the title of the course
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.CourseForRegistrationDto.creditUnit">
+            <summary>
+            maps to the creditUnnit field of the course model
+            </summary>
+        </member>
+        <member name="P:School_Management_App.DTOs.CourseForRegistrationDto.faculty">
+            <summary>
+            maps to the faculty field of the course model
             </summary>
         </member>
         <member name="T:School_Management_App.DTOs.StudentForDetailedDto">
